@@ -27,4 +27,13 @@
 		<version>1.0.37</version>
 	</dependency>
   </dependencies>
+
+	<distributionManagement>
+                <repository>
+                <id>bintray-yxl-macaca-java-biz</id>
+                <name>yxl-macaca-java-biz</name>
+                <url>https://api.bintray.com/maven/yxl/macaca-java-biz/;publish=1</url>
+                </repository>
+	</distributionManagement>
+
 </project>
