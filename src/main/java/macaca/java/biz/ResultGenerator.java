@@ -30,7 +30,7 @@ public class ResultGenerator {
 	}
 
 	/**
-	 * 清除result.log数据
+	 * 清除log数据,包含result.log & custom.log
 	 */
 	public static void clearOldData() {
 		File resultFile = new File(NAME);

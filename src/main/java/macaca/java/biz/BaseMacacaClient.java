@@ -1,6 +1,14 @@
 package macaca.java.biz;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+
+import com.alibaba.fastjson.JSONObject;
+
 import macaca.client.MacacaClient;
+import macaca.client.common.GetElementWay;
 
 /**
  * 自定义的MacacaClient基类，用于在MacacaClient基础上封装自己的处理
@@ -17,6 +25,10 @@ public class BaseMacacaClient extends MacacaClient{
 
 	// 当前运行的平台
 	public PlatformType curPlatform;
+
+	// 用于diff两张图片是否相同
+	public static final String  BEFORE_IMAGE_NAME = "before.png";
+	public static final String  AFTER_IMAGE_NAME = "after.png";
 
 	public PlatformType getCurPlatform() {
 		return curPlatform;
@@ -287,6 +299,122 @@ public class BaseMacacaClient extends MacacaClient{
     }
 
 
+    /**
+   	 * 滑动当前页面到指定控件
+   	 * Support: Android iOS Web(WebView)
+   	 * @param wayToFind
+   	 * 			目标控件查找方式
+   	 * @param value
+   	 * 			目标控件查找值
+   	 * @return
+   	 * 			true:找到控件，并完成滑动
+   	 * 		    false:控件不存在，滑到底部依然没有查到
+   	 */
+   	public boolean scrollToElement (GetElementWay wayToFind, String value){
+
+   		JSONObject windowSize;
+   		try {
+   			windowSize = getWindowSize();
+   			int windowWidth = windowSize.getIntValue("width");
+   			int windowHeight = windowSize.getIntValue("height");
+
+   			int startX = windowWidth-20;
+   			int endX = startX;
+   			int startY = windowHeight*3/5;
+   			int endY = windowHeight*2/5;
+
+   			String beforeScreenShot = null ;
+   			String afterScreenShot = null;
+   			String beforePng = "before.png";
+   			String afterPng = "after.png";
+   			while (!isElementExist(wayToFind, value)) {
+
+   				File shotOne = new File(beforePng);
+   				File shotTwo = new File(afterPng);
+   				beforeScreenShot = getFileMD5(shotOne);
+   				afterScreenShot = getFileMD5(shotTwo);
+   				if (beforeScreenShot != null &&
+   					beforeScreenShot.length() > 0) {
+   					if (beforeScreenShot.equals(afterScreenShot)) {
+   						// the same screen image ,it means current view has scroll to bottom
+   						System.out.println("the given element does not exist");
+   						deleteDiffImages();
+   						return false;
+   					}
+   				}
+
+   				saveScreenshot(beforePng);
+   				System.out.println("scroll: ("+startX+","+startY+","+endX+","+endY+")");
+   				swipe(startX, startY, endX, endY, 50);
+   				Thread.sleep(1000);
+   				saveScreenshot(afterPng);
+
+   			}
 
 
-}
+   			deleteDiffImages();
+
+   			return true;
+
+   		} catch (Exception e) {
+   			// TODO Auto-generated catch block
+   			deleteDiffImages();
+   			e.printStackTrace();
+   		}
+
+   		deleteDiffImages();
+   		return false;
+
+   	}
+
+   	private void deleteDiffImages() {
+   		try {
+   			// 如果存在图片，则删除,防止污染图片
+   			File shotOne = new File(BEFORE_IMAGE_NAME);
+   			File shotTwo = new File(AFTER_IMAGE_NAME);
+   			if (shotOne.exists()) {
+   				shotOne.delete();
+   			}
+
+   			if (shotTwo.exists()) {
+   				shotTwo.delete();
+   			}
+   		} catch (Exception e) {
+   			// TODO: handle exception
+   			e.printStackTrace();
+   		}
+
+   	}
+
+   	/**
+   	 * 获取文件md5
+   	 * @param file
+   	 * @return
+   	 */
+   	 public static String getFileMD5(File file) {
+   		 if (!file.isFile()) {
+   		      return null;
+   		    }
+   		    MessageDigest digest = null;
+   		    FileInputStream in=null;
+   		    byte buffer[] = new byte[1024];
+   		    int len;
+   		    try {
+   		      digest = MessageDigest.getInstance("MD5");
+   		      in = new FileInputStream(file);
+   		      while ((len = in.read(buffer, 0, 1024)) != -1) {
+   		        digest.update(buffer, 0, len);
+   		      }
+   		      in.close();
+   		    } catch (Exception e) {
+   		      e.printStackTrace();
+   		      return null;
+   		    }
+   		    BigInteger bigInt = new BigInteger(1, digest.digest());
+   		    return bigInt.toString(16);
+   		  }
+   	 }
+
+
+
+
