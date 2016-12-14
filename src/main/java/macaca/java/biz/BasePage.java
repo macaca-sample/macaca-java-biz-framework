@@ -34,6 +34,11 @@ public class BasePage  {
 		this.pageDesc = pageDesc;
 	}
 
+	public BasePage(String pageDesc,BaseMacacaClient driver){
+		this.pageDesc = pageDesc;
+		this.driver = driver;
+	}
+
 	/**
 	 * 当前页面是否已经展示
 	 * @return
