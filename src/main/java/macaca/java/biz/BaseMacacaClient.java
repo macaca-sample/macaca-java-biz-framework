@@ -15,12 +15,18 @@ import macaca.client.common.GetElementWay;
  * @author xiulian.yin
  *
  */
-public class BaseMacacaClient extends MacacaClient{
+public class BaseMacacaClient extends MacacaClient {
 
 	// 定义平台类型枚举
 	public enum PlatformType {
 		IOS,
 		ANDROID
+	}
+
+	// 定义手势
+	public enum GesturePinchType {
+		PINCH_IN, //两只手指向内缩小元素
+		PINCH_OUT,// 两只手指向外放大元素
 	}
 
 	// 当前运行的平台
@@ -226,8 +232,7 @@ public class BaseMacacaClient extends MacacaClient{
 		if(curPlatform == PlatformType.IOS) {
 			// iOS返回，通过模拟右滑返回实现
 			try {
-				super
-				.swipe(0, 100, 300, 100, 500);
+				drag(0, 100, 300, 100, 0.5, 10);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				ResultGenerator.catchedException(e);
@@ -345,7 +350,7 @@ public class BaseMacacaClient extends MacacaClient{
 
    				saveScreenshot(beforePng);
    				System.out.println("scroll: ("+startX+","+startY+","+endX+","+endY+")");
-   				swipe(startX, startY, endX, endY, 50);
+   				drag(startX, startY, endX, endY, 0.05,10);
    				Thread.sleep(1000);
    				saveScreenshot(afterPng);
 
@@ -413,7 +418,136 @@ public class BaseMacacaClient extends MacacaClient{
    		    BigInteger bigInt = new BigInteger(1, digest.digest());
    		    return bigInt.toString(16);
    		  }
-   	 }
+
+    /**
+     * 点击
+     * @param x
+     * 			x坐标
+     * @param y
+     * 			y坐标
+     * @throws Exception
+     */
+	public void tap(double x,double y) throws Exception {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("x", x);
+		jsonObject.put("y", y);
+		touch("tap", jsonObject);
+	}
+
+	/**
+	 * 双击
+	 * @param x
+	 * 			x坐标
+	 * @param y
+	 * 			y坐标
+	 * @throws Exception
+	 */
+	public void doubleTap(double x,double y) throws Exception {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("x", x);
+		jsonObject.put("y", y);
+		touch("doubleTap", jsonObject);
+	}
+
+	/**
+	 * 长按手势
+	 * @param x
+	 * 			x坐标
+	 * @param y
+	 * 			y坐标
+	 * @param duration
+	 * 			长按时间(针对iOS，以s为单位)
+	 * @param steps
+	 * 			长按单位（针对Android,每个step约等于5ms）
+	 * @throws Exception
+	 */
+	public  void press(double x,double y, double duration,int steps) throws Exception{
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("x", x);
+		jsonObject.put("y", y);
+		jsonObject.put("duration", duration);
+		jsonObject.put("steps", steps);
+		touch("press", jsonObject);
+	}
+
+	/**
+	 * 两只手指操作放大缩小
+	 * @param x
+	 * 			x坐标
+	 * @param y
+	 * 			y坐标
+	 * @param scale
+	 * 			放大缩小的比例(针对iOS，大于1表示放大，小于1表示缩小)
+	 * @param velocity
+	 * 			放大缩小的速率(针对iOS)
+	 * @param pinchType
+	 * 			手势类型,GesturePinchType.PINCH_IN-向内缩小，GesturePinchType.PINCH_OUT-向外放大（针对Android）
+	 * @param percent
+	 * 			放大缩小的比例(针对Android,persent=50,缩放到50%)
+	 * @param steps
+	 * 			放大缩小的时长（针对Android,每个step约等于5ms）
+	 * @throws Exception
+	 */
+	public void pinch(double x,double y,double scale, double velocity,GesturePinchType direction,double percent,int steps) throws Exception{
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("x", x);
+		jsonObject.put("y", y);
+		jsonObject.put("scale", scale);
+		jsonObject.put("velocity", velocity);
+		jsonObject.put("percent", percent);
+		jsonObject.put("steps", steps);
+		if (direction == GesturePinchType.PINCH_IN) {
+			jsonObject.put("direction", "in");
+		} else {
+			jsonObject.put("direction", "out");
+		}
+		touch("pinch", jsonObject);
+	}
+
+	/**
+	 * 旋转手势(只针对iOS)
+	 * @param rotation
+	 * 			旋转弧度
+	 * @param velocity
+	 * 			旋转速率
+	 * @throws Exception
+	 */
+	public void rotate(double rotation, double velocity) throws Exception {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("rotation", rotation);
+		jsonObject.put("velocity", velocity);
+		touch("rotate", jsonObject);
+	}
+
+	/**
+	 * 拖拽一个元素，可实现滑动，拖动操作
+	 * @param fromX
+	 * 			拖拽起点x坐标
+	 * @param fromY
+	 * 			拖拽起点y坐标
+	 * @param toX
+	 * 			拖拽终点x坐标
+	 * @param toY
+	 * 			拖拽终点y坐标
+	 * @param duration
+	 * 			时长(针对iOS，单位s)
+	 * @param steps
+	 * 			时长(针对Android,每个step约等于5ms)
+	 * @throws Exception
+	 */
+	public void drag(double fromX, double fromY, double toX,double toY,double duration, int steps) throws Exception{
+
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("fromX", fromX);
+		jsonObject.put("fromY", fromY);
+		jsonObject.put("toX", toX);
+		jsonObject.put("toY", toY);
+		jsonObject.put("duration", duration);
+		jsonObject.put("steps", steps);
+
+		touch("drag", jsonObject);
+	}
+}
 
 
 
