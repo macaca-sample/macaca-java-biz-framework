@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ResultGenerator {
 
@@ -52,8 +54,8 @@ public class ResultGenerator {
 	 */
 	public static void success(String action, String desc){
 		//为了保证customLog的完整性，把resultLog的输出也打印到customLog上
-		write2File(NAME, true, action+SEPARATOR+true+SEPARATOR+desc+LINE_SEPARATOR);
-		write2File(CUSTOM_LOG, true, action+SEPARATOR+true+SEPARATOR+desc+LINE_SEPARATOR);
+		write2File(NAME, true,  getStringDate() + "," + action+SEPARATOR+true+SEPARATOR+desc+LINE_SEPARATOR);
+		write2File(CUSTOM_LOG, true,  getStringDate() + "," + action+SEPARATOR+true+SEPARATOR+desc+LINE_SEPARATOR);
 
 	}
 
@@ -97,8 +99,8 @@ public class ResultGenerator {
 	 * @param type	错误类型, 必须选择一个错误类型
 	 */
 	public static void fail(String action,  String desc, BaseErrorType type){
-		write2File(NAME, true, action+SEPARATOR+false+SEPARATOR+desc+SEPARATOR+type.getId()+LINE_SEPARATOR);
-		write2File(CUSTOM_LOG, true, action+SEPARATOR+false+SEPARATOR+desc+SEPARATOR+type.getId()+LINE_SEPARATOR);
+		write2File(NAME, true,  getStringDate() + "," + action + SEPARATOR + false + SEPARATOR + desc + SEPARATOR + type.getId() + LINE_SEPARATOR);
+		write2File(CUSTOM_LOG, true,  getStringDate() + "," + action+SEPARATOR + false + SEPARATOR + desc + SEPARATOR + type.getId() + LINE_SEPARATOR);
 	}
 
 	/**
@@ -107,10 +109,22 @@ public class ResultGenerator {
 	 * @param desc
 	 */
 	public static void customLog(String action,String desc){
-		write2File(CUSTOM_LOG, true, action+SEPARATOR+desc+LINE_SEPARATOR);
+		write2File(CUSTOM_LOG, true, getStringDate() + "," + action+SEPARATOR+desc+LINE_SEPARATOR);
 	}
 	public static void main(String[] args) {
 //		success("登录成功", "");
+	}
+
+	/**
+	   * 获取现在时间
+	   *
+	   * @return返回字符串格式 yyyy-MM-dd HH:mm:ss
+	   */
+	public static String getStringDate() {
+	   Date currentTime = new Date();
+	   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	   String dateString = formatter.format(currentTime);
+	   return dateString;
 	}
 
 }
