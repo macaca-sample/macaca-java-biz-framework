@@ -6,6 +6,8 @@ a framework for uiautomation business development based on macacaClient(wd.java)
 
 底层依赖参考： [wd.java](https://github.com/macacajs/wd.java) 
 
+如何引用可参考 ： [macaca-java-biz-sample](https://github.com/macaca-sample/macaca-java-biz-sample)
+
 # Release notes
 
 ## 0.0.7 - 2016/12/28
