@@ -4,7 +4,7 @@
 
   <groupId>macaca.java</groupId>
   <artifactId>biz</artifactId>
-  <version>0.0.6</version>
+  <version>0.0.7</version>
   <packaging>jar</packaging>
 
   <name>biz</name>
@@ -24,7 +24,7 @@
     <dependency>
 		<groupId>macaca.webdriver.client</groupId>
 		<artifactId>macacaclient</artifactId>
-		<version>1.0.40</version>
+		<version>1.0.48</version>
 	</dependency>
   </dependencies>
 
