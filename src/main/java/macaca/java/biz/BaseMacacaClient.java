@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import com.alibaba.fastjson.JSONObject;
 
 import macaca.client.MacacaClient;
+import macaca.client.commands.Element;
 import macaca.client.common.GetElementWay;
 
 /**
@@ -50,15 +51,15 @@ public class BaseMacacaClient extends MacacaClient {
 	 * @param bean
 	 * @throws Exception
 	 */
-	public void findElement(CommonUIBean bean) throws Exception {
+	public Element findElement(CommonUIBean bean) throws Exception {
 
 		if(curPlatform == PlatformType.IOS ) {
 			// 当前为iOS平台
-			getElement(bean.getIosBy(), bean.getIosValue());
+			return getElement(bean.getIosBy(), bean.getIosValue());
 		}
 		else
 		{
-			getElement(bean.getAndroidBy(), bean.getAndroidValue());
+			return getElement(bean.getAndroidBy(), bean.getAndroidValue());
 		}
 	}
 
@@ -68,15 +69,15 @@ public class BaseMacacaClient extends MacacaClient {
 	 * @param index 目标控件index
 	 * @throws Exception
 	 */
-	public void findElementByIndex(CommonUIBean bean ,int index) throws Exception{
+	public Element findElementByIndex(CommonUIBean bean ,int index) throws Exception{
 		if(curPlatform == PlatformType.IOS ) {
 			// 当前为iOS平台
-			getElement(bean.getIosBy(),bean.getIosValue() , index);
+			return getElement(bean.getIosBy(),bean.getIosValue() , index);
 		}
 		else
 		{
 			// 当前为安卓平台
-			getElement(bean.getAndroidBy(), bean.getAndroidValue(),index);
+			return getElement(bean.getAndroidBy(), bean.getAndroidValue(),index);
 		}
 
 	}
@@ -106,14 +107,14 @@ public class BaseMacacaClient extends MacacaClient {
 	 * @return
 	 * @throws Exception
 	 */
-	public void waitForElement(CommonUIBean bean) throws Exception {
+	public Element waitForElement(CommonUIBean bean) throws Exception {
 
 		if(curPlatform == PlatformType.IOS ) {
-			waitForElement(bean.getIosBy(), bean.getIosValue());
+			return waitForElement(bean.getIosBy(), bean.getIosValue());
 		}
 		else
 		{
-			waitForElement(bean.getAndroidBy(), bean.getAndroidValue());
+			return waitForElement(bean.getAndroidBy(), bean.getAndroidValue());
 		}
 	}
 
@@ -123,13 +124,13 @@ public class BaseMacacaClient extends MacacaClient {
 	 * @param index 目标控件index
 	 * @throws Exception
 	 */
-	public void waitForElement(CommonUIBean bean,int index) throws Exception {
+	public Element waitForElement(CommonUIBean bean,int index) throws Exception {
 		if(curPlatform == PlatformType.IOS ) {
-			waitForElement(bean.getIosBy(), bean.getIosValue(),index);
+			return waitForElement(bean.getIosBy(), bean.getIosValue(),index);
 		}
 		else
 		{
-			waitForElement(bean.getAndroidBy(), bean.getAndroidValue(),index);
+			return waitForElement(bean.getAndroidBy(), bean.getAndroidValue(),index);
 		}
 	}
 	/**
@@ -249,8 +250,8 @@ public class BaseMacacaClient extends MacacaClient {
 	public void onclickBean(CommonUIBean bean) {
 		try {
 			if (isElementExistAfterWaiting(bean)) {
-				findElement(bean);
-				click();
+				Element element = findElement(bean);
+				element.click();
 				ResultGenerator.success("点击:"+bean.elementDesc,"" );
 			} else {
 				ResultGenerator.findElementFail(bean);
@@ -270,8 +271,8 @@ public class BaseMacacaClient extends MacacaClient {
 	public void onclickBeanAtIndex(CommonUIBean bean, int index) {
 		try {
 			if (isElementExistAfterWaiting(bean,index)) {
-				findElementByIndex(bean, index);
-				click();
+				Element element = findElementByIndex(bean, index);
+				element.click();
 				ResultGenerator.success("点击:"+bean.elementDesc +"["+ index+"]" ,"");
 			} else {
 				ResultGenerator.findElementFail(bean);
@@ -290,8 +291,8 @@ public class BaseMacacaClient extends MacacaClient {
     public void inputBean(CommonUIBean bean,String input){
     	try {
     		if (isElementExistAfterWaiting(bean)) {
-				findElement(bean);
-				sendKeys(input);
+				Element element = findElement(bean);
+				element.sendKeys(input);
 				ResultGenerator.success("输入: "+bean.elementDesc+";value:"+input,"");
 			} else {
 				ResultGenerator.findElementFail(bean);
@@ -419,134 +420,6 @@ public class BaseMacacaClient extends MacacaClient {
    		    return bigInt.toString(16);
    		  }
 
-    /**
-     * 点击
-     * @param x
-     * 			x坐标
-     * @param y
-     * 			y坐标
-     * @throws Exception
-     */
-	public void tap(double x,double y) throws Exception {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("x", x);
-		jsonObject.put("y", y);
-		touch("tap", jsonObject);
-	}
-
-	/**
-	 * 双击
-	 * @param x
-	 * 			x坐标
-	 * @param y
-	 * 			y坐标
-	 * @throws Exception
-	 */
-	public void doubleTap(double x,double y) throws Exception {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("x", x);
-		jsonObject.put("y", y);
-		touch("doubleTap", jsonObject);
-	}
-
-	/**
-	 * 长按手势
-	 * @param x
-	 * 			x坐标
-	 * @param y
-	 * 			y坐标
-	 * @param duration
-	 * 			长按时间(针对iOS，以s为单位)
-	 * @param steps
-	 * 			长按单位（针对Android,每个step约等于5ms）
-	 * @throws Exception
-	 */
-	public  void press(double x,double y, double duration,int steps) throws Exception{
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("x", x);
-		jsonObject.put("y", y);
-		jsonObject.put("duration", duration);
-		jsonObject.put("steps", steps);
-		touch("press", jsonObject);
-	}
-
-	/**
-	 * 两只手指操作放大缩小
-	 * @param x
-	 * 			x坐标
-	 * @param y
-	 * 			y坐标
-	 * @param scale
-	 * 			放大缩小的比例(针对iOS，大于1表示放大，小于1表示缩小)
-	 * @param velocity
-	 * 			放大缩小的速率(针对iOS)
-	 * @param pinchType
-	 * 			手势类型,GesturePinchType.PINCH_IN-向内缩小，GesturePinchType.PINCH_OUT-向外放大（针对Android）
-	 * @param percent
-	 * 			放大缩小的比例(针对Android,persent=50,缩放到50%)
-	 * @param steps
-	 * 			放大缩小的时长（针对Android,每个step约等于5ms）
-	 * @throws Exception
-	 */
-	public void pinch(double x,double y,double scale, double velocity,GesturePinchType direction,double percent,int steps) throws Exception{
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("x", x);
-		jsonObject.put("y", y);
-		jsonObject.put("scale", scale);
-		jsonObject.put("velocity", velocity);
-		jsonObject.put("percent", percent);
-		jsonObject.put("steps", steps);
-		if (direction == GesturePinchType.PINCH_IN) {
-			jsonObject.put("direction", "in");
-		} else {
-			jsonObject.put("direction", "out");
-		}
-		touch("pinch", jsonObject);
-	}
-
-	/**
-	 * 旋转手势(只针对iOS)
-	 * @param rotation
-	 * 			旋转弧度
-	 * @param velocity
-	 * 			旋转速率
-	 * @throws Exception
-	 */
-	public void rotate(double rotation, double velocity) throws Exception {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("rotation", rotation);
-		jsonObject.put("velocity", velocity);
-		touch("rotate", jsonObject);
-	}
-
-	/**
-	 * 拖拽一个元素，可实现滑动，拖动操作
-	 * @param fromX
-	 * 			拖拽起点x坐标
-	 * @param fromY
-	 * 			拖拽起点y坐标
-	 * @param toX
-	 * 			拖拽终点x坐标
-	 * @param toY
-	 * 			拖拽终点y坐标
-	 * @param duration
-	 * 			时长(针对iOS，单位s)
-	 * @param steps
-	 * 			时长(针对Android,每个step约等于5ms)
-	 * @throws Exception
-	 */
-	public void drag(double fromX, double fromY, double toX,double toY,double duration, int steps) throws Exception{
-
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("fromX", fromX);
-		jsonObject.put("fromY", fromY);
-		jsonObject.put("toX", toX);
-		jsonObject.put("toY", toY);
-		jsonObject.put("duration", duration);
-		jsonObject.put("steps", steps);
-
-		touch("drag", jsonObject);
-	}
 }
 
 
