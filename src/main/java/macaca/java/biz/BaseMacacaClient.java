@@ -304,6 +304,86 @@ public class BaseMacacaClient extends MacacaClient {
 		}
     }
 
+    /**
+     * 清除指定控件文案
+     * @param bean 要清除文案的控件
+     */
+    public void clearText(CommonUIBean bean) {
+    	try {
+    		Element element = findElement(bean);
+        	element.clearText();
+		} catch (Exception e) {
+			// TODO: handle exception
+			ResultGenerator.catchedException(e);
+		}
+
+    }
+
+    /**
+     * 获取控件文案
+     * @param bean 目标控件
+     * @return
+     */
+    public String getText(CommonUIBean bean) {
+    	try {
+			Element element = findElement(bean);
+			return element.getText();
+		} catch (Exception e) {
+			// TODO: handle exception
+			ResultGenerator.catchedException(e);
+		}
+		return null;
+	}
+
+    /**
+     * 获取控件属性
+     * @param bean 目标控件
+     * @param name 要获取的属性名字
+     * Support: Android iOS Web(WebView). iOS支持: 'isVisible', 'label', 'value', Android支持: 'selected', 'description', 'text'
+     * @return
+     */
+    public Object getProperty(CommonUIBean bean,String name) {
+    	try {
+			Element element = findElement(bean);
+			return element.getProperty(name);
+		} catch (Exception e) {
+			// TODO: handle exception
+			ResultGenerator.catchedException(e);
+			return null;
+		}
+    }
+
+    /**
+     * 获取控件rect
+     * @param bean 目标控件
+     * @return jsonObject eg: {x:100,y:100,width：100,height:100}
+     */
+    public Object getRect(CommonUIBean bean) {
+    	try {
+			Element element = findElement(bean);
+			return element.getRect();
+		} catch (Exception e) {
+			// TODO: handle exception
+			ResultGenerator.catchedException(e);
+			return null;
+		}
+    }
+
+    /**
+     * 控件是否展示
+     * @param bean 目标控件
+     * @return true-展示  false-未展示
+     */
+    public boolean isDisplayed(CommonUIBean bean){
+    	try {
+    		Element element = findElement(bean);
+    		return element.isDisplayed();
+		} catch (Exception e) {
+			// TODO: handle exception
+			ResultGenerator.catchedException(e);
+			return false;
+		}
+    }
 
     /**
    	 * 滑动当前页面到指定控件
