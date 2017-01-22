@@ -10,5 +10,6 @@ a framework for uiautomation business development based on macacaClient(wd.java)
 
 # Release notes
 
-## 0.0.7 - 2016/12/28
-* 修改 macacaClient 依赖版本为 1.0.48 （具体底层变更需要参考wd.java HISTORY.md）
+发布历史参考根目录下 HISTORY.md文档
+
+# API文档参考docs目录下index.html
