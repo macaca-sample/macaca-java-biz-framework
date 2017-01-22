@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.sql.Driver;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -417,8 +418,8 @@ public class BaseMacacaClient extends MacacaClient {
 
    				File shotOne = new File(beforePng);
    				File shotTwo = new File(afterPng);
-   				beforeScreenShot = getFileMD5(shotOne);
-   				afterScreenShot = getFileMD5(shotTwo);
+   				beforeScreenShot = BaseUtils.getFileMD5(shotOne);
+   				afterScreenShot = BaseUtils.getFileMD5(shotTwo);
    				if (beforeScreenShot != null &&
    					beforeScreenShot.length() > 0) {
    					if (beforeScreenShot.equals(afterScreenShot)) {
@@ -472,33 +473,54 @@ public class BaseMacacaClient extends MacacaClient {
 
    	}
 
+
+    // App操作相关
    	/**
-   	 * 获取文件md5
-   	 * @param file
-   	 * @return
+   	 * Support : Android only
+   	 * 启动app- 需在server启动后调用，如server未启动，需要通过BaseUtils.startApp(deviceId, packageName, activityName)调用
+   	 * Support : Android Only
    	 */
-   	 public static String getFileMD5(File file) {
-   		 if (!file.isFile()) {
-   		      return null;
-   		    }
-   		    MessageDigest digest = null;
-   		    FileInputStream in=null;
-   		    byte buffer[] = new byte[1024];
-   		    int len;
-   		    try {
-   		      digest = MessageDigest.getInstance("MD5");
-   		      in = new FileInputStream(file);
-   		      while ((len = in.read(buffer, 0, 1024)) != -1) {
-   		        digest.update(buffer, 0, len);
-   		      }
-   		      in.close();
-   		    } catch (Exception e) {
-   		      e.printStackTrace();
-   		      return null;
-   		    }
-   		    BigInteger bigInt = new BigInteger(1, digest.digest());
-   		    return bigInt.toString(16);
-   		  }
+ 	public void startApp(){
+ 		JSONObject capabilities = contexts.getCapabilities();
+ 		JSONObject value = capabilities.getJSONObject("value");
+ 		String deviceId = value.getString("udid");
+ 		String packageName = value.getString("package");
+ 		String activityName = value.getString("activity");
+ 		BaseUtils.startApp(deviceId, packageName, activityName);
+ 	}
+
+ 	/**
+ 	 * Support : Android Only
+ 	 * 清理app,回到初始状态 -需在server启动后调用，如server未启动，需要通过BaseUtils.clearApp(deviceId, packageName)调用
+ 	 */
+ 	public void clearApp() {
+
+ 		JSONObject capabilities = contexts.getCapabilities();
+ 		JSONObject value = capabilities.getJSONObject("value");
+ 		String deviceId = value.getString("udid");
+ 		String packageName = value.getString("package");
+ 		BaseUtils.clearApp(deviceId, packageName);
+ 	}
+
+ 	/**
+ 	 * Support : Android Only
+ 	 * 杀死app -需在server启动后调用，如server未启动，需要通过BaseUtils.forceStopApp(deviceId, packageName)调用
+ 	 */
+ 	public void forceStopApp() {
+ 		JSONObject capabilities = contexts.getCapabilities();
+ 		JSONObject value = capabilities.getJSONObject("value");
+ 		String deviceId = value.getString("udid");
+ 		String packageName = value.getString("package");
+ 		BaseUtils.forceStopApp(deviceId, packageName);
+ 	}
+
+
+
+
+
+
+
+
 
 }
 
