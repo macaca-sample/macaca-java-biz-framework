@@ -10,6 +10,10 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
+
+import macaca.client.MacacaClient;
+
 public class BaseUtils {
 
 	 /**
@@ -135,5 +139,7 @@ public class BaseUtils {
 
  		return true;
  	}
+
+   
 
 }

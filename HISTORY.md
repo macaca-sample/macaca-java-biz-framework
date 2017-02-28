@@ -1,3 +1,12 @@
+# 1.0.1 / 2017-02-28
+### 增加部分API
+	
+   // BaseMacacaClient.java
+	* scrollToBottom() // 滑动视图到底部
+	* scrollToTop() // 滑动视图到顶部
+	* switchFromNativeToWebView() // 切换上下文到webview（在对webview操作前执行）
+	* switchFromeWebviewToNative（） // 切换上下文到native
+	
 #1.0 / 2017-01-22
 ### 增加App操作相关的API,如启动app,清理app，杀死app(目前只提供针对Android平台的操作)
 
