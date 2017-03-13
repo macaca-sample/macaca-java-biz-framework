@@ -341,7 +341,7 @@ public class BaseMacacaClient extends MacacaClient {
      * 获取控件属性
      * @param bean 目标控件
      * @param name 要获取的属性名字
-     * Support: Android iOS Web(WebView). iOS支持: 'isVisible', 'label', 'value', Android支持: 'selected', 'description', 'text'
+     * Support: Android iOS Web(WebView). iOS: 'isVisible', 'isAccessible', 'isEnabled', 'type', 'label', 'name', 'value', Android: 'selected', 'description', 'text'
      * @return
      */
     public Object getProperty(CommonUIBean bean,String name) {
