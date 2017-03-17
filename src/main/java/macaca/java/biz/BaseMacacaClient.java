@@ -400,7 +400,7 @@ public class BaseMacacaClient extends MacacaClient {
    	 */
    	public boolean scrollToElement (GetElementWay wayToFind, String value){
 
-   		JSONObject windowSize;
+   		/*	JSONObject windowSize;
    		try {
    			windowSize = getWindowSize();
    			int windowWidth = windowSize.getIntValue("width");
@@ -452,32 +452,50 @@ public class BaseMacacaClient extends MacacaClient {
 
    		deleteDiffImages();
    		return false;
-
+*/
+   		return scrollToElementCustom (wayToFind, value, false, 100);
    	}
-	
-	/**
-   	 * 滑动当前页面到指定控件(适用于Pad横屏应用 )
+   	
+   	/**
+   	 * 滑动当前页面到指定控件(支持横屏滑动和竖屏滑动)
    	 * Support: Android iOS Web(WebView)
    	 * @param wayToFind
    	 * 			目标控件查找方式
    	 * @param value
    	 * 			目标控件查找值
+   	 * @param isHorizontal
+   	 *          是否横屏，true：横屏，false：竖屏
+   	 * @param stepSize
+   	 *          滑动的跨度（幅度、距离）
    	 * @return
    	 * 			true:找到控件，并完成滑动
    	 * 		    false:控件不存在，滑到底部依然没有查到
    	 */
-   	public boolean scrollToElementPad (GetElementWay wayToFind, String value){
+   	public boolean scrollToElementCustom (GetElementWay wayToFind, String value, boolean isHorizontal, int stepSize){
 
    		JSONObject windowSize;
    		try {
    			windowSize = getWindowSize();
    			int windowWidth = windowSize.getIntValue("width");
    			int windowHeight = windowSize.getIntValue("height");
-
-   			int startX = windowWidth*2/5;
-   			int endX = windowWidth*4/5;
-   			int startY = windowHeight-20;
-   			int endY = startY;
+   			
+   			int startX = 0;
+   			int endX = 0;
+   			int startY = 0;
+   			int endY = 0;
+   			
+   			if(isHorizontal==true){
+   				startX = windowWidth*2/5;
+   	   			endX = startX+stepSize;
+   	   			startY = windowHeight-20;
+   	   			endY = startY;
+   			}else{
+   				startX = windowWidth-20;
+   	   			endX = startX;
+   	   			startY = windowHeight*3/5;
+   	   			endY = startY-stepSize;
+   				
+   			}
 
    			String beforeScreenShot = null ;
    			String afterScreenShot = null;
