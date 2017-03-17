@@ -5,7 +5,7 @@
 	
 ### 修改一个API
    // BaseMacacaClient.java
-       * scrollToElement (GetElementWay wayToFind, String value) //注释掉了之前的方法体，在里面调用了scrollToElementCustom (GetElementWay wayToFind, String value, boolean isHorizontal, int stepSize)实现滑动当前页面到指定控件
+      * scrollToElement (GetElementWay wayToFind, String value) //注释掉了之前的方法体，在里面调用了scrollToElementCustom (GetElementWay wayToFind, String value, boolean isHorizontal, int stepSize)实现滑动当前页面到指定控件
       
 各API详细使用规则可参考注释文档
 
