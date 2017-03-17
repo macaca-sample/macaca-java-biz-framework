@@ -1,3 +1,14 @@
+# 1.0.4 / 2017-03-17
+### 增加一个API
+   // BaseMacacaClient.java
+	* scrollToElementCustom (GetElementWay wayToFind, String value, boolean isHorizontal, int stepSize) // 滑动当前页面到指定控件(支持横屏滑动和竖屏滑动)
+	
+### 修改一个API
+   // BaseMacacaClient.java
+      * scrollToElement (GetElementWay wayToFind, String value) //注释掉了之前的方法体，在里面调用了scrollToElementCustom (GetElementWay wayToFind, String value, boolean isHorizontal, int stepSize)实现滑动当前页面到指定控件
+      
+各API详细使用规则可参考注释文档
+
 # 1.0.1 / 2017-02-28
 ### 增加部分API
 	
