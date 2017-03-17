@@ -454,6 +454,74 @@ public class BaseMacacaClient extends MacacaClient {
    		return false;
 
    	}
+	
+	/**
+   	 * 滑动当前页面到指定控件(适用于Pad横屏应用 )
+   	 * Support: Android iOS Web(WebView)
+   	 * @param wayToFind
+   	 * 			目标控件查找方式
+   	 * @param value
+   	 * 			目标控件查找值
+   	 * @return
+   	 * 			true:找到控件，并完成滑动
+   	 * 		    false:控件不存在，滑到底部依然没有查到
+   	 */
+   	public boolean scrollToElementPad (GetElementWay wayToFind, String value){
+
+   		JSONObject windowSize;
+   		try {
+   			windowSize = getWindowSize();
+   			int windowWidth = windowSize.getIntValue("width");
+   			int windowHeight = windowSize.getIntValue("height");
+
+   			int startX = windowWidth*2/5;
+   			int endX = windowWidth*4/5;
+   			int startY = windowHeight-20;
+   			int endY = startY;
+
+   			String beforeScreenShot = null ;
+   			String afterScreenShot = null;
+   			String beforePng = "before.png";
+   			String afterPng = "after.png";
+   			while (!isElementExist(wayToFind, value)) {
+
+   				File shotOne = new File(beforePng);
+   				File shotTwo = new File(afterPng);
+   				beforeScreenShot = BaseUtils.getFileMD5(shotOne);
+   				afterScreenShot = BaseUtils.getFileMD5(shotTwo);
+   				if (beforeScreenShot != null &&
+   					beforeScreenShot.length() > 0) {
+   					if (beforeScreenShot.equals(afterScreenShot)) {
+   						// the same screen image ,it means current view has scroll to bottom
+   						System.out.println("the given element does not exist");
+   						deleteDiffImages();
+   						return false;
+   					}
+   				}
+
+   				saveScreenshot(beforePng);
+   				System.out.println("scroll: ("+startX+","+startY+","+endX+","+endY+")");
+   				drag(startX, startY, endX, endY, 0.05,10);
+   				Thread.sleep(1000);
+   				saveScreenshot(afterPng);
+
+   			}
+
+
+   			deleteDiffImages();
+
+   			return true;
+
+   		} catch (Exception e) {
+   			// TODO Auto-generated catch block
+   			deleteDiffImages();
+   			e.printStackTrace();
+   		}
+
+   		deleteDiffImages();
+   		return false;
+
+   	}
 
    	/**
    	 * 滑动到最底部
