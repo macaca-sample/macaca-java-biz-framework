@@ -1,3 +1,15 @@
+# 1.0.5 / 2017-03-22
+### 增加一个API
+   // BaseMacacaClient.java
+	* scrollToBottomOrTop (boolean isHorizontal,boolean isToBottom) // 横屏或竖屏滑动到最底部或最顶部
+	
+### 修改两个API
+   // BaseMacacaClient.java
+      * scrollToBottom () //注释掉了之前的方法体，在里面调用了scrollToBottomOrTop (boolean isHorizontal,boolean isToBottom)实现滑动到最底部
+      * scrollToTop () //注释掉了之前的方法体，在里面调用了scrollToBottomOrTop (boolean isHorizontal,boolean isToBottom)实现滑动到最顶部
+
+各API详细使用规则可参考注释文档
+
 # 1.0.4 / 2017-03-17
 ### 增加一个API
    // BaseMacacaClient.java
