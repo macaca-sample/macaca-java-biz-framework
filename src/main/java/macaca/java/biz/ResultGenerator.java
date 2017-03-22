@@ -109,7 +109,6 @@ public class ResultGenerator {
 	 * @param desc
 	 */
 	public static void customLog(String action,String desc){
-		System.out.println(action+desc);
 		write2File(CUSTOM_LOG, true, getStringDate() + "," + action+SEPARATOR+desc+LINE_SEPARATOR);
 	}
 	public static void main(String[] args) {
