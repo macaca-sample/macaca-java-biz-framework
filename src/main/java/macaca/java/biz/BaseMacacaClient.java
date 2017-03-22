@@ -545,7 +545,7 @@ public class BaseMacacaClient extends MacacaClient {
    	 * 滑动到最底部
    	 */
    	public void scrollToBottom () {
-   		JSONObject windowSize;
+   	/*	JSONObject windowSize;
    		try {
    			windowSize = getWindowSize();
    			int windowWidth = windowSize.getIntValue("width");
@@ -598,13 +598,15 @@ public class BaseMacacaClient extends MacacaClient {
    		}
 
    		deleteDiffImages();
+   		*/
+   		scrollToBottomOrTop(false,true);
    	}
 
 	/**
    	 * 滑动到最顶部
    	 */
    	public void scrollToTop () {
-   		JSONObject windowSize;
+   	/*	JSONObject windowSize;
    		try {
    			windowSize = getWindowSize();
    			int windowWidth = windowSize.getIntValue("width");
@@ -631,6 +633,118 @@ public class BaseMacacaClient extends MacacaClient {
    					if (beforeScreenShot.equals(afterScreenShot)) {
    						// the same screen image ,it means current view has scroll to bottom
    						System.out.println("scroollToBottom");
+   						deleteDiffImages();
+   						return;
+   					}
+   				}
+
+   				saveScreenshot(beforePng);
+   				System.out.println("scroll: ("+startX+","+startY+","+endX+","+endY+")");
+   				drag(startX, startY, endX, endY, 0.05,10);
+   				Thread.sleep(1000);
+   				saveScreenshot(afterPng);
+   				// 为防止死循环，最多滑动10次
+   				flag--;
+
+   			}
+
+
+   			deleteDiffImages();
+
+
+   		} catch (Exception e) {
+   			// TODO Auto-generated catch block
+   			deleteDiffImages();
+   			e.printStackTrace();
+   		}
+
+   		deleteDiffImages();
+   		*/
+   		scrollToBottomOrTop(false,false);
+   	}
+   	
+   	/**
+   	 * 横屏或竖屏滑动到最底部或最顶部
+   	 * @param isHorizontal
+   	 *          是否横屏，true：横屏，false：竖屏
+   	 * @param isToBottom
+   	 *          是否滑动到最底部，true：滑动到最底部，false：滑动到最顶部
+   	 */
+   	public void scrollToBottomOrTop (boolean isHorizontal,boolean isToBottom) {
+   		JSONObject windowSize;
+   		try {
+   			windowSize = getWindowSize();
+   			int windowWidth = windowSize.getIntValue("width");
+   			int windowHeight = windowSize.getIntValue("height");
+   			
+   			int startX = 0;
+   			int endX = 0;
+   			int startY = 0;
+   			int endY = 0;
+   			
+   			String beforeScreenShot = null ;
+		    String afterScreenShot = null;
+		    String beforePng = null;
+		    String afterPng = null;
+		    beforePng = "before.png";
+		    afterPng = "after.png";
+		    
+   			//是否横屏
+   			if(isHorizontal==true){
+   				//是横屏
+   				//是滑动到最底部
+   				if(isToBottom==true){
+   					startX = windowWidth*2/5;
+   	   	   			endX = windowWidth*4/5;
+   	   	   			startY = windowHeight-20;
+   	   	   			endY = startY;
+   	   	   			
+   				}else{
+   					//是滑动到最顶部
+   					startX = windowWidth*4/5;
+   	   	   			endX = windowWidth*2/5;
+   	   	   			startY = windowHeight-20;
+   	   	   			endY = startY;
+   	   	   		    
+   				}
+   				
+   			}else{
+   				//是竖屏
+   			    //是滑动到最底部
+   				if(isToBottom==true){
+   					startX = windowWidth-20;
+   	   	   			endX = startX;
+   	   	   			startY = windowHeight*3/5;
+   	   	   			endY = windowHeight*2/5;
+
+   				}else{
+   					//是滑动到最顶部
+   					startX = windowWidth-20;
+   	   	   			endX = startX;
+   	   	   			startY = windowHeight*2/5;
+   	   	   			endY = windowHeight*3/5;
+
+   				}	
+   			}
+
+   			   			
+   			int flag = 10;
+   			while (flag > 0) {
+
+   				File shotOne = new File(beforePng);
+   				File shotTwo = new File(afterPng);
+   				beforeScreenShot = BaseUtils.getFileMD5(shotOne);
+   				afterScreenShot = BaseUtils.getFileMD5(shotTwo);
+   				if (beforeScreenShot != null &&
+   					beforeScreenShot.length() > 0) {
+   					if (beforeScreenShot.equals(afterScreenShot)) {
+   						// the same screen image ,it means current view has scroll to bottom or top
+   						if(isToBottom==true){
+   							System.out.println("scrollToBottom");
+   						}else{
+   							System.out.println("scrollToTop");
+   						}
+   						
    						deleteDiffImages();
    						return;
    					}
