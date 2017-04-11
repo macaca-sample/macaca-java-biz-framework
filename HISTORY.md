@@ -1,4 +1,4 @@
-# 2017-04-11
+# 1.0.9 / 2017-04-11
 ### 增加两个个API
    // BaseUtils.java
 	* deviceInstaller (String deviceType,String deviceId,String packagePath) // 安装app Support: Android ios
