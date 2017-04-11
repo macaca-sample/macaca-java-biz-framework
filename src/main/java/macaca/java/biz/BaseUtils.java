@@ -41,6 +41,56 @@ public class BaseUtils {
         }
         return lines;
     }
+	
+    /**
+     * 安装app
+     * Support: Android ios
+     * 注：ios设备使用该方法时需提前在本机安装命令行工具ideviceinstaller，安装方法：brew install ideviceinstaller
+     * @param deviceType 设备类型 ios,android
+     * @param deviceId 设备id,当存在多个设备时需指定设备id,如果只有一台设备，可以不必指定,ios:udid
+     * @param packagePath 安装包路径 Android：.apk，ios：.ipa
+     */
+    public static void deviceInstaller (String deviceType,String deviceId,String packagePath){
+    	if(deviceType=="android"){
+    		
+    		installApp(deviceId,packagePath);
+    		
+    	}else if(deviceType=="ios"){
+    		
+    		if (isStringNotNull(deviceId)) {
+    			exec2("/usr/local/bin/ideviceinstaller -u "+ deviceId + " -i " + packagePath);
+    		} else {
+    			exec2("/usr/local/bin/ideviceinstaller -i " + packagePath);
+    		}
+    	}
+    	
+    	
+    }
+    
+    /**
+ 	  * 启动app
+ 	  * Support: Android ios
+ 	  * 注：ios设备使用该方法时需提前在本机安装命令行工具libimobiledevice，安装方法：前往https://github.com/libimobiledevice/libimobiledevice 将项目下载到本地，按照README进行配置、编译安装即可
+ 	  * @param deviceType 设备类型 ios,android
+ 	  * @param deviceId 设备id,当存在多个设备时需指定设备id,如果只有一台设备，可以不必指定,ios:udid
+ 	  * @param packageName for Android，要启动app的packageName,与initDriver时设置的desiredCapabilities一致
+ 	  * @param activityName for Android，要启动app的activityName,与initDriver时设置的desiredCapabilities一致
+ 	  * @param bundleId for ios，要启动app的bundleId 
+ 	  */
+ 	 public static void launchApp(String deviceType,String deviceId,String packageName,String activityName,String bundleId ) throws InterruptedException {
+ 		 if(deviceType=="android"){
+ 			startApp(deviceId,packageName,activityName);
+ 		 }else if(deviceType=="ios"){
+ 			if (isStringNotNull(deviceId)) {
+    			exec2("/usr/local/bin/idevicedebug -u "+ deviceId + " run " + bundleId);
+    			exec2("pkill idevicedebug");
+    		} else {
+    			exec2("/usr/local/bin/idevicedebug run " + bundleId);
+    			exec2("pkill idevicedebug");
+    		}
+ 			 
+ 		 }
+ 	 }
 
     /**
      * 安装app
