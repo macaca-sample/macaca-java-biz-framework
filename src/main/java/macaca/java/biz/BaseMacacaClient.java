@@ -453,25 +453,23 @@ public class BaseMacacaClient extends MacacaClient {
    		deleteDiffImages();
    		return false;
 */
-   		return scrollToElementCustom (wayToFind, value, false, 100);
+   		return scrollToElementCustom (wayToFind, value, 100);
    	}
    	
    	/**
-   	 * 滑动当前页面到指定控件(支持横屏滑动和竖屏滑动)
+   	 * 滑动当前页面到指定控件
    	 * Support: Android iOS Web(WebView)
    	 * @param wayToFind
    	 * 			目标控件查找方式
    	 * @param value
    	 * 			目标控件查找值
-   	 * @param isHorizontal
-   	 *          是否横屏，true：横屏，false：竖屏
    	 * @param stepSize
    	 *          滑动的跨度（幅度、距离）
    	 * @return
    	 * 			true:找到控件，并完成滑动
    	 * 		    false:控件不存在，滑到底部依然没有查到
    	 */
-   	public boolean scrollToElementCustom (GetElementWay wayToFind, String value, boolean isHorizontal, int stepSize){
+   	public boolean scrollToElementCustom (GetElementWay wayToFind, String value, int stepSize){
 
    		JSONObject windowSize;
    		try {
@@ -483,19 +481,13 @@ public class BaseMacacaClient extends MacacaClient {
    			int endX = 0;
    			int startY = 0;
    			int endY = 0;
-   			
-   			if(isHorizontal==true){
-   				startX = windowWidth*2/5;
-   	   			endX = startX+stepSize;
-   	   			startY = windowHeight-20;
-   	   			endY = startY;
-   			}else{
-   				startX = windowWidth-20;
-   	   			endX = startX;
-   	   			startY = windowHeight*3/5;
-   	   			endY = startY-stepSize;
+   
+   		    startX = windowWidth-20;
+   	   		endX = startX;
+   	   		startY = windowHeight*3/5;
+   	   		endY = startY-stepSize;
    				
-   			}
+   			
 
    			String beforeScreenShot = null ;
    			String afterScreenShot = null;
@@ -599,7 +591,7 @@ public class BaseMacacaClient extends MacacaClient {
 
    		deleteDiffImages();
    		*/
-   		scrollToBottomOrTop(false,true);
+   		scrollToBottomOrTop(true);
    	}
 
 	/**
@@ -660,17 +652,15 @@ public class BaseMacacaClient extends MacacaClient {
 
    		deleteDiffImages();
    		*/
-   		scrollToBottomOrTop(false,false);
+   		scrollToBottomOrTop(false);
    	}
    	
    	/**
-   	 * 横屏或竖屏滑动到最底部或最顶部
-   	 * @param isHorizontal
-   	 *          是否横屏，true：横屏，false：竖屏
+   	 * 滑动到最底部或最顶部
    	 * @param isToBottom
    	 *          是否滑动到最底部，true：滑动到最底部，false：滑动到最顶部
    	 */
-   	public void scrollToBottomOrTop (boolean isHorizontal,boolean isToBottom) {
+   	public void scrollToBottomOrTop (boolean isToBottom) {
    		JSONObject windowSize;
    		try {
    			windowSize = getWindowSize();
@@ -688,46 +678,23 @@ public class BaseMacacaClient extends MacacaClient {
 		    String afterPng = null;
 		    beforePng = "before.png";
 		    afterPng = "after.png";
-		    
-   			//是否横屏
-   			if(isHorizontal==true){
-   				//是横屏
-   				//是滑动到最底部
-   				if(isToBottom==true){
-   					startX = windowWidth*2/5;
-   	   	   			endX = windowWidth*4/5;
-   	   	   			startY = windowHeight-20;
-   	   	   			endY = startY;
-   	   	   			
-   				}else{
-   					//是滑动到最顶部
-   					startX = windowWidth*4/5;
-   	   	   			endX = windowWidth*2/5;
-   	   	   			startY = windowHeight-20;
-   	   	   			endY = startY;
-   	   	   		    
-   				}
-   				
-   			}else{
-   				//是竖屏
-   			    //是滑动到最底部
+		   
+   				//滑动到最底部
    				if(isToBottom==true){
    					startX = windowWidth-20;
    	   	   			endX = startX;
-   	   	   			startY = windowHeight*3/5;
+   	   	   			startY = windowHeight*4/5;
    	   	   			endY = windowHeight*2/5;
-
+   	   	   			
    				}else{
-   					//是滑动到最顶部
+   					//滑动到最顶部
    					startX = windowWidth-20;
    	   	   			endX = startX;
    	   	   			startY = windowHeight*2/5;
-   	   	   			endY = windowHeight*3/5;
-
-   				}	
-   			}
-
-   			   			
+   	   	   			endY = windowHeight*4/5;
+   	   	   		    
+   				}
+   					
    			int flag = 10;
    			while (flag > 0) {
 
