@@ -1,3 +1,13 @@
+# 1.1 / 2017-05-04
+### 修改两个API
+   // BaseMacacaClient.java
+	* scrollToElementCustom (GetElementWay wayToFind, String value, int stepSize) // 去掉对横屏or竖屏的判断，底层wd.java已经自适应横屏or竖屏
+	* scrollToBottomOrTop (boolean isToBottom) // 去掉对横屏or竖屏的判断，底层wd.java已经自适应横屏or竖屏
+	* public void scrollToTop () // 调用更新后的scrollToBottomOrTop方法
+	* scrollToBottom() // 调用更新后的scrollToBottomOrTop方法
+	* scrollToElement (GetElementWay wayToFind, String value) // 调用更新后的scrollToElementCustom方法
+各API详细使用规则可参考注释文档
+
 # 1.0.9 / 2017-04-11
 ### 增加两个API
    // BaseUtils.java
