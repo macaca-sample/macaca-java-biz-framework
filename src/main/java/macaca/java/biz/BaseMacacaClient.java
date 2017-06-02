@@ -235,7 +235,7 @@ public class BaseMacacaClient extends MacacaClient {
 		if(curPlatform == PlatformType.IOS) {
 			// iOS返回，通过模拟右滑返回实现
 			try {
-				drag(0, 100, 300, 100, 0.5, 10);
+				drag(0, 100, 300, 100, 1);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				ResultGenerator.catchedException(e);
@@ -400,60 +400,8 @@ public class BaseMacacaClient extends MacacaClient {
    	 */
    	public boolean scrollToElement (GetElementWay wayToFind, String value){
 
-   		/*	JSONObject windowSize;
-   		try {
-   			windowSize = getWindowSize();
-   			int windowWidth = windowSize.getIntValue("width");
-   			int windowHeight = windowSize.getIntValue("height");
-
-   			int startX = windowWidth-20;
-   			int endX = startX;
-   			int startY = windowHeight*3/5;
-   			int endY = windowHeight*2/5;
-
-   			String beforeScreenShot = null ;
-   			String afterScreenShot = null;
-   			String beforePng = "before.png";
-   			String afterPng = "after.png";
-   			while (!isElementExist(wayToFind, value)) {
-
-   				File shotOne = new File(beforePng);
-   				File shotTwo = new File(afterPng);
-   				beforeScreenShot = BaseUtils.getFileMD5(shotOne);
-   				afterScreenShot = BaseUtils.getFileMD5(shotTwo);
-   				if (beforeScreenShot != null &&
-   					beforeScreenShot.length() > 0) {
-   					if (beforeScreenShot.equals(afterScreenShot)) {
-   						// the same screen image ,it means current view has scroll to bottom
-   						System.out.println("the given element does not exist");
-   						deleteDiffImages();
-   						return false;
-   					}
-   				}
-
-   				saveScreenshot(beforePng);
-   				System.out.println("scroll: ("+startX+","+startY+","+endX+","+endY+")");
-   				drag(startX, startY, endX, endY, 0.05,10);
-   				Thread.sleep(1000);
-   				saveScreenshot(afterPng);
-
-   			}
-
-
-   			deleteDiffImages();
-
-   			return true;
-
-   		} catch (Exception e) {
-   			// TODO Auto-generated catch block
-   			deleteDiffImages();
-   			e.printStackTrace();
-   		}
-
-   		deleteDiffImages();
-   		return false;
-*/
    		return scrollToElementCustom (wayToFind, value, 100);
+
    	}
    	
    	/**
@@ -511,7 +459,7 @@ public class BaseMacacaClient extends MacacaClient {
 
    				saveScreenshot(beforePng);
    				System.out.println("scroll: ("+startX+","+startY+","+endX+","+endY+")");
-   				drag(startX, startY, endX, endY, 0.05,10);
+   				drag(startX, startY, endX, endY, 1);
    				Thread.sleep(1000);
    				saveScreenshot(afterPng);
 
@@ -537,60 +485,7 @@ public class BaseMacacaClient extends MacacaClient {
    	 * 滑动到最底部
    	 */
    	public void scrollToBottom () {
-   	/*	JSONObject windowSize;
-   		try {
-   			windowSize = getWindowSize();
-   			int windowWidth = windowSize.getIntValue("width");
-   			int windowHeight = windowSize.getIntValue("height");
 
-   			int startX = windowWidth-20;
-   			int endX = startX;
-   			int startY = windowHeight*3/5;
-   			int endY = windowHeight*2/5;
-
-   			String beforeScreenShot = null ;
-   			String afterScreenShot = null;
-   			String beforePng = "before_bottom.png";
-   			String afterPng = "after_bottom.png";
-   			int flag = 10;
-   			while (flag > 0) {
-
-   				File shotOne = new File(beforePng);
-   				File shotTwo = new File(afterPng);
-   				beforeScreenShot = BaseUtils.getFileMD5(shotOne);
-   				afterScreenShot = BaseUtils.getFileMD5(shotTwo);
-   				if (beforeScreenShot != null &&
-   					beforeScreenShot.length() > 0) {
-   					if (beforeScreenShot.equals(afterScreenShot)) {
-   						// the same screen image ,it means current view has scroll to bottom
-   						System.out.println("scroollToBottom");
-   						deleteDiffImages();
-   						return;
-   					}
-   				}
-
-   				saveScreenshot(beforePng);
-   				System.out.println("scroll: ("+startX+","+startY+","+endX+","+endY+")");
-   				drag(startX, startY, endX, endY, 0.05,10);
-   				Thread.sleep(1000);
-   				saveScreenshot(afterPng);
-   				// 为防止死循环，最多滑动10次
-   				flag--;
-
-   			}
-
-
-   			deleteDiffImages();
-
-
-   		} catch (Exception e) {
-   			// TODO Auto-generated catch block
-   			deleteDiffImages();
-   			e.printStackTrace();
-   		}
-
-   		deleteDiffImages();
-   		*/
    		scrollToBottomOrTop(true);
    	}
 
@@ -598,61 +493,9 @@ public class BaseMacacaClient extends MacacaClient {
    	 * 滑动到最顶部
    	 */
    	public void scrollToTop () {
-   	/*	JSONObject windowSize;
-   		try {
-   			windowSize = getWindowSize();
-   			int windowWidth = windowSize.getIntValue("width");
-   			int windowHeight = windowSize.getIntValue("height");
 
-   			int startX = windowWidth-20;
-   			int endX = startX;
-   			int startY = windowHeight*2/5;
-   			int endY = windowHeight*3/5;
-
-   			String beforeScreenShot = null ;
-   			String afterScreenShot = null;
-   			String beforePng = "before_top.png";
-   			String afterPng = "after_top.png";
-   			int flag = 10;
-   			while (flag > 0) {
-
-   				File shotOne = new File(beforePng);
-   				File shotTwo = new File(afterPng);
-   				beforeScreenShot = BaseUtils.getFileMD5(shotOne);
-   				afterScreenShot = BaseUtils.getFileMD5(shotTwo);
-   				if (beforeScreenShot != null &&
-   					beforeScreenShot.length() > 0) {
-   					if (beforeScreenShot.equals(afterScreenShot)) {
-   						// the same screen image ,it means current view has scroll to bottom
-   						System.out.println("scroollToBottom");
-   						deleteDiffImages();
-   						return;
-   					}
-   				}
-
-   				saveScreenshot(beforePng);
-   				System.out.println("scroll: ("+startX+","+startY+","+endX+","+endY+")");
-   				drag(startX, startY, endX, endY, 0.05,10);
-   				Thread.sleep(1000);
-   				saveScreenshot(afterPng);
-   				// 为防止死循环，最多滑动10次
-   				flag--;
-
-   			}
-
-
-   			deleteDiffImages();
-
-
-   		} catch (Exception e) {
-   			// TODO Auto-generated catch block
-   			deleteDiffImages();
-   			e.printStackTrace();
-   		}
-
-   		deleteDiffImages();
-   		*/
    		scrollToBottomOrTop(false);
+
    	}
    	
    	/**
@@ -695,7 +538,7 @@ public class BaseMacacaClient extends MacacaClient {
    	   	   		    
    				}
    					
-   			int flag = 10;
+   			int flag = 15;
    			while (flag > 0) {
 
    				File shotOne = new File(beforePng);
@@ -719,7 +562,7 @@ public class BaseMacacaClient extends MacacaClient {
 
    				saveScreenshot(beforePng);
    				System.out.println("scroll: ("+startX+","+startY+","+endX+","+endY+")");
-   				drag(startX, startY, endX, endY, 0.05,10);
+   				drag(startX, startY, endX, endY, 1);
    				Thread.sleep(1000);
    				saveScreenshot(afterPng);
    				// 为防止死循环，最多滑动10次
@@ -805,7 +648,6 @@ public class BaseMacacaClient extends MacacaClient {
  	 // switch to the context of the last pushed webview
  	/**
  	 * 从native切换到webview
- 	 * @param driver
  	 * @return
  	 * @throws Exception
  	 */
@@ -817,7 +659,6 @@ public class BaseMacacaClient extends MacacaClient {
 
     /**
      * 从webview切换到native
-     * @param driver
      * @return
      * @throws Exception
      */
