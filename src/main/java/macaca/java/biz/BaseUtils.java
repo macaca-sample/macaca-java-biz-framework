@@ -17,9 +17,9 @@ import macaca.client.MacacaClient;
 public class BaseUtils {
 
 	 /**
-     * 执行系统命令
+     * 执行系统adb命令
      *
-     * @param cmd
+     * @param cmd 要执行的adb命令
      * @return
      */
     public static List<String> exec2(String cmd) {
@@ -190,6 +190,6 @@ public class BaseUtils {
  		return true;
  	}
 
-   
+
 
 }
