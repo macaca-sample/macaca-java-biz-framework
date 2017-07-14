@@ -226,6 +226,56 @@ public class BaseMacacaClient extends MacacaClient {
 
 	}
 
+	/**
+	 * check if an parent element has specific child element
+	 * @param parentBean
+	 * @param childBean
+	 * @return
+	 * @throws Exception
+	 */
+	@Deprecated
+	public boolean hasChildElement(CommonUIBean parentBean,CommonUIBean childBean) throws  Exception {
+		Element parentElement = findElement(parentBean);
+		if (curPlatform == BaseMacacaClient.PlatformType.IOS) {
+			return parentElement.hasChildElement(childBean.getIosBy(),childBean.getIosValue());
+		}
+		else
+		{
+			return parentElement.hasChildElement(childBean.getAndroidBy(),childBean.getAndroidValue());
+		}
+	}
+
+	/**
+	 * find child elements for parent element
+	 * @param parentBean
+	 * @param childBean
+	 * @return
+	 * @throws Exception
+	 */
+	@Deprecated
+	public JSONArray findChildElements(CommonUIBean parentBean,CommonUIBean childBean) throws  Exception {
+		Element parentElement = findElement(parentBean);
+		if (curPlatform == BaseMacacaClient.PlatformType.IOS) {
+			return parentElement.findChildElements(childBean.getIosBy(),childBean.getIosValue());
+		}
+		else
+		{
+			return parentElement.findChildElements(childBean.getAndroidBy(),childBean.getAndroidValue());
+		}
+	}
+
+
+	/**
+	 * get count of Child element for given parent element
+	 * @param parentBean
+	 * @param childBean
+	 * @return
+	 * @throws Exception
+	 */
+	@Deprecated
+	public  int countOfChildElements(CommonUIBean parentBean,CommonUIBean childBean) throws  Exception {
+		return findChildElements(parentBean,childBean).size();
+	}
 
 	/**
 	 * 自定义返回事件，对于iOS,通过右滑手势实现，对于Android，需要另外处理
