@@ -1,3 +1,9 @@
+# 1.1.4 / 2017-07-14
+### 增加一个个API
+   // BaseUtils.java
+	* uninstallApp (String deviceType,String deviceId,String app) // 删除app Support: Android ios
+各API详细使用规则可参考注释文档
+
 # 1.1 / 2017-05-04
 ### 修改两个API
    // BaseMacacaClient.java
