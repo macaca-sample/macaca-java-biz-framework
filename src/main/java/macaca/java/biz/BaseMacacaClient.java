@@ -537,7 +537,7 @@ public class BaseMacacaClient extends MacacaClient {
    	   	   			endY = windowHeight*4/5;
    	   	   		    
    				}
-   					
+   			deleteDiffImages();		
    			int flag = 15;
    			while (flag > 0) {
 
