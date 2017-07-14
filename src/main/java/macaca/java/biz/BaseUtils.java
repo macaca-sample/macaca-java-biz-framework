@@ -43,6 +43,35 @@ public class BaseUtils {
     }
 	
     /**
+     * 删除app
+     * Support: Android ios
+     * 注：ios设备使用该方法时需提前在本机安装命令行工具ideviceinstaller，安装方法：brew install ideviceinstaller
+     * @param deviceType 设备类型 ios,android
+     * @param deviceId 设备id,当存在多个设备时需指定设备id,如果只有一台设备，可以不必指定,ios:udid
+     * @param app Android:apk的包名 iOS:app的bundleId
+     */
+    public static void uninstallApp (String deviceType,String deviceId,String app){
+    	if(deviceType=="android"){
+    		
+    		if (isStringNotNull(deviceId)) {
+    			exec2("adb -s "+ deviceId + " uninstall " + app);
+    		} else {
+    			exec2("adb uninstall " + app);
+    		}
+    		
+    	}else if(deviceType=="ios"){
+    		
+    		if (isStringNotNull(deviceId)) {
+    			exec2("/usr/local/bin/ideviceinstaller -u "+ deviceId + " -U " + app);
+    		} else {
+    			exec2("/usr/local/bin/ideviceinstaller -U " + app);
+    		}
+    	}
+    	
+    	
+    }
+    
+    /**
      * 安装app
      * Support: Android ios
      * 注：ios设备使用该方法时需提前在本机安装命令行工具ideviceinstaller，安装方法：brew install ideviceinstaller
