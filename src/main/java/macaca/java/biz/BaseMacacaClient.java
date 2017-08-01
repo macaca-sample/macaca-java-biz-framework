@@ -55,14 +55,8 @@ public class BaseMacacaClient extends MacacaClient {
 	 */
 	public Element findElement(CommonUIBean bean) throws Exception {
 
-		if(curPlatform == PlatformType.IOS ) {
-			// 当前为iOS平台
-			return getElement(bean.getIosBy(), bean.getIosValue());
-		}
-		else
-		{
-			return getElement(bean.getAndroidBy(), bean.getAndroidValue());
-		}
+		return  findElementByIndex(bean,bean.index);
+
 	}
 
 	/**
@@ -112,11 +106,11 @@ public class BaseMacacaClient extends MacacaClient {
 	public Element waitForElement(CommonUIBean bean) throws Exception {
 
 		if(curPlatform == PlatformType.IOS ) {
-			return waitForElement(bean.getIosBy(), bean.getIosValue());
+			return waitForElement(bean.getIosBy(), bean.getIosValue(),bean.index);
 		}
 		else
 		{
-			return waitForElement(bean.getAndroidBy(), bean.getAndroidValue());
+			return waitForElement(bean.getAndroidBy(), bean.getAndroidValue(),bean.index);
 		}
 	}
 
@@ -144,11 +138,11 @@ public class BaseMacacaClient extends MacacaClient {
 		try {
 
 			if(curPlatform == PlatformType.IOS ) {
-				return isElementExist(bean.getIosBy(), bean.getIosValue());
+				return isElementExist(bean.getIosBy(), bean.getIosValue(),bean.index);
 			}
 			else
 			{
-				return isElementExist(bean.getAndroidBy(),bean.getAndroidValue());
+				return isElementExist(bean.getAndroidBy(),bean.getAndroidValue(),bean.index);
 			}
 
 		} catch (Exception e) {
@@ -162,6 +156,7 @@ public class BaseMacacaClient extends MacacaClient {
 	/**
 	 * 判断某个控件是否存在
 	 * @param bean
+	 * @param index
 	 * @return
 	 */
 	public boolean isElementExist(CommonUIBean bean,int index) {
@@ -559,7 +554,7 @@ public class BaseMacacaClient extends MacacaClient {
    			windowSize = getWindowSize();
    			int windowWidth = windowSize.getIntValue("width");
    			int windowHeight = windowSize.getIntValue("height");
-   			
+
    			int startX = 0;
    			int endX = 0;
    			int startY = 0;

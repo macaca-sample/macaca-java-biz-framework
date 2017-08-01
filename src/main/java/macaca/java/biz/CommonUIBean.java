@@ -8,6 +8,7 @@ public class CommonUIBean {
 	protected String androidValue;
 	protected GetElementWay iosBy;//id or xpath or name
 	protected String iosValue;
+	protected int index = 0;
 	public String elementDesc; 	// 控件描述
 
 	/**
@@ -27,6 +28,23 @@ public class CommonUIBean {
 	}
 
 	/**
+	 * 当安卓 ios两个平台对应同一控件的获取方式不一致时使用本构造函数
+	 * @param androidBy 获取安卓对应控件的方式
+	 * @param androidValue 获取安卓对应控件的值
+	 * @param iosBy 获取ios对应控件的方式
+	 * @param iosValue 获取ios对应控件的值
+	 * @param index 控件索引，当存在多个控件时，用index表示要查找的控件的index
+	 * @param elementDesc 控件描述文案
+	 */
+	public CommonUIBean(GetElementWay androidBy,String androidValue,GetElementWay iosBy,String iosValue,int index, String elementDesc){
+		this.androidBy = androidBy;
+		this.androidValue = androidValue;
+		this.iosBy = iosBy;
+		this.iosValue = iosValue;
+		this.elementDesc = elementDesc;
+		this.index = index;
+	}
+	/**
 	 * 构造函数，用于ios&android两个平台获取UI一致的情况
 	 * @param commonBy 统一获取控件方式
 	 * @param commonValue 统一获取控件值
@@ -39,6 +57,23 @@ public class CommonUIBean {
 		this.iosValue = commonValue;
 		this.elementDesc = elementDesc;
 	}
+
+	/**
+	 * 构造函数，用于ios&android两个平台获取UI一致的情况
+	 * @param commonBy 统一获取控件方式
+	 * @param commonValue 统一获取控件值
+	 * @param elementDesc 控件描述文案
+	 * @param index 控件索引，当存在多个控件时，用index表示要查找的控件的index
+	 */
+	public CommonUIBean(GetElementWay commonBy,String commonValue, int index,String elementDesc){
+		this.androidBy = commonBy;
+		this.androidValue = commonValue;
+		this.iosBy = commonBy;
+		this.iosValue = commonValue;
+		this.elementDesc = elementDesc;
+		this.index = index;
+	}
+
 
 	public GetElementWay getAndroidBy() {
 		return androidBy;
@@ -64,6 +99,9 @@ public class CommonUIBean {
 	public void setIosValue(String iosValue) {
 		this.iosValue = iosValue;
 	}
+
+	public void  setIndex(int index){this.index = index;}
+	public int getIndex(){return  index;}
 
 	public String getElementDesc() {
 		return elementDesc;
