@@ -47,7 +47,15 @@ public class BasePage  {
 	 * @throws Exception
 	 */
 	public boolean hasPageShown(CommonUIBean bean)  {
-		return driver.isElementExistAfterWaiting(bean);
+		boolean flag = driver.isElementExistAfterWaiting(bean);
+		if (flag) {
+			ResultGenerator.loadPageSucc(this);
+		} else
+		{
+			ResultGenerator.loadPageFail(this);
+
+		}
+		return flag;
 	}
 
 

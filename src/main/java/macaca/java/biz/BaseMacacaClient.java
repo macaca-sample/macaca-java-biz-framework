@@ -277,6 +277,7 @@ public class BaseMacacaClient extends MacacaClient {
 	 * @throws Exception
 	 */
 	public void customBack() throws Exception {
+		ResultGenerator.success("返回上一页","右滑返回");
 		if(curPlatform == PlatformType.IOS) {
 			// iOS返回，通过模拟右滑返回实现
 			try {
