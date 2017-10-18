@@ -417,21 +417,6 @@ public class BaseMacacaClient extends MacacaClient {
 		}
     }
 
-    /**
-     * 控件是否展示
-     * @param bean 目标控件
-     * @return true-展示  false-未展示
-     */
-    public boolean isDisplayed(CommonUIBean bean){
-    	try {
-    		Element element = findElement(bean);
-    		return element.isDisplayed();
-		} catch (Exception e) {
-			// TODO: handle exception
-			ResultGenerator.catchedException(e);
-			return false;
-		}
-    }
 
     /**
    	 * 滑动当前页面到指定控件
