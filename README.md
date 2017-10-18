@@ -12,7 +12,7 @@ A framework for uiautomation business development based on macacaClient(wd.java)
 
 ## API文档
 
-- [链接](./docs)
+- [链接](//macaca-sample.github.io/macaca-java-biz-framework/)
 
 ## Release notes
 
