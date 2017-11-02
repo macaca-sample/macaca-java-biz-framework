@@ -44,8 +44,9 @@ public class CommonUIBean {
 		this.elementDesc = elementDesc;
 		this.index = index;
 	}
+
 	/**
-	 * 构造函数，用于ios&android两个平台获取UI一致的情况
+	 * 构造函数，用于ios android两个平台获取UI一致的情况
 	 * @param commonBy 统一获取控件方式
 	 * @param commonValue 统一获取控件值
 	 * @param elementDesc 控件描述文案
@@ -59,7 +60,7 @@ public class CommonUIBean {
 	}
 
 	/**
-	 * 构造函数，用于ios&android两个平台获取UI一致的情况
+	 * 构造函数，用于ios android两个平台获取UI一致的情况
 	 * @param commonBy 统一获取控件方式
 	 * @param commonValue 统一获取控件值
 	 * @param elementDesc 控件描述文案

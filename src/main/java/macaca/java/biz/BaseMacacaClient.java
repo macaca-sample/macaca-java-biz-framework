@@ -32,7 +32,9 @@ public class BaseMacacaClient extends MacacaClient {
 		PINCH_OUT,// 两只手指向外放大元素
 	}
 
-	// 当前运行的平台
+	/**
+	 * 当前运行的平台，目前支持iOS Android
+	 */
 	public PlatformType curPlatform;
 
 	// 用于diff两张图片是否相同
@@ -50,8 +52,8 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
 	 * 查找控件，当同样的控件有多个时，返回第一个
-	 * @param bean
-	 * @throws Exception
+	 * @param bean 要查找的UI控件对象
+	 * @throws Exception 查找中的异常
 	 */
 	public Element findElement(CommonUIBean bean) throws Exception {
 
@@ -61,9 +63,9 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
 	 * 根据索引获取控件，当同样的控件可能存在多个时，查询返回的是一个数组，此时通过传入目标控件的索引获取指定控件
-	 * @param bean 要查找的控件
+	 * @param bean 要查找的控件对象
 	 * @param index 目标控件index
-	 * @throws Exception
+	 * @throws Exception 抛出异常
 	 */
 	public Element findElementByIndex(CommonUIBean bean ,int index) throws Exception{
 		if(curPlatform == PlatformType.IOS ) {
@@ -82,7 +84,7 @@ public class BaseMacacaClient extends MacacaClient {
 	 * 当一类控件存在多个时，返回共有多少个该控件
 	 * @param bean 要查找的控件
 	 * @return 控件数组个数
-	 * @throws Exception
+	 * @throws Exception 抛出异常
 	 */
 	public int  countOfElment(CommonUIBean bean) throws Exception {
 
@@ -99,9 +101,9 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
 	 * 循环查找某个element，直到查找完毕
-	 * @param bean
-	 * @return
-	 * @throws Exception
+	 * @param bean 要查找的控件
+	 * @return 如果控件存在，返回控件对象，如果不存在，返回null
+	 * @throws Exception 抛出异常
 	 */
 	public Element waitForElement(CommonUIBean bean) throws Exception {
 
@@ -118,7 +120,7 @@ public class BaseMacacaClient extends MacacaClient {
 	 * 循环查找某个element,直到查找完毕，适用于当前控件存在多个时，按照索引查找
 	 * @param bean  要查找的控件
 	 * @param index 目标控件index
-	 * @throws Exception
+	 * @throws Exception 抛出异常
 	 */
 	public Element waitForElement(CommonUIBean bean,int index) throws Exception {
 		if(curPlatform == PlatformType.IOS ) {
@@ -131,7 +133,7 @@ public class BaseMacacaClient extends MacacaClient {
 	}
 	/**
 	 * 判断某个控件是否存在
-	 * @param bean
+	 * @param bean 要判断的UI控件对象
 	 * @return
 	 */
 	public boolean isElementExist(CommonUIBean bean) {
@@ -155,8 +157,8 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
 	 * 判断某个控件是否存在
-	 * @param bean
-	 * @param index
+	 * @param bean 要判断的UI控件对象
+	 * @param index 要判断的控件的索引，当同样标记的控件存在多个时，用于唯一标记一个控件
 	 * @return
 	 */
 	public boolean isElementExist(CommonUIBean bean,int index) {
@@ -180,8 +182,8 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
 	 * 是否存在目标控件，如果当前没有该控件，在给定时间内循环查询，查询间隔以及时长通过setWaitElementTimeInterval,setWaitElementTimeout可设置
-	 * @param bean
-	 * @return
+	 * @param bean 要查找的UI控件对象
+	 * @return true:控件存在 false:控件不存在
 	 */
 	public boolean isElementExistAfterWaiting(CommonUIBean bean) {
 		try {
@@ -202,8 +204,9 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
 	 * 是否存在目标控件，如果当前没有该控件，在给定时间内循环查询，查询间隔以及时长通过setWaitElementTimeInterval,setWaitElementTimeout可设置
-	 * @param bean
-	 * @return
+	 * @param bean 要判断的UI控件对象
+	 * @param index 要判断的控件的索引，当同样标记的控件存在多个时，用于唯一标记一个控件
+	 * @return true:控件存在 false:控件不存在
 	 */
 	public boolean isElementExistAfterWaiting(CommonUIBean bean, int index) {
 		try {
@@ -223,10 +226,10 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
 	 * check if an parent element has specific child element
-	 * @param parentBean
-	 * @param childBean
-	 * @return
-	 * @throws Exception
+	 * @param parentBean 父控件
+	 * @param childBean 子控件
+	 * @return true:父控件含有子控件 false:父控件不含有子控件
+	 * @throws Exception 抛出异常
 	 */
 	@Deprecated
 	public boolean hasChildElement(CommonUIBean parentBean,CommonUIBean childBean) throws  Exception {
@@ -242,10 +245,10 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
 	 * find child elements for parent element
-	 * @param parentBean
-	 * @param childBean
-	 * @return
-	 * @throws Exception
+	 * @param parentBean 父控件
+	 * @param childBean 子控件
+	 * @return Json数组
+	 * @throws Exception 抛出异常
 	 */
 	@Deprecated
 	public JSONArray findChildElements(CommonUIBean parentBean,CommonUIBean childBean) throws  Exception {
@@ -262,10 +265,10 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
 	 * get count of Child element for given parent element
-	 * @param parentBean
-	 * @param childBean
-	 * @return
-	 * @throws Exception
+	 * @param parentBean 父控件
+	 * @param childBean 子控件
+	 * @return 数量
+	 * @throws Exception 抛出异常
 	 */
 	@Deprecated
 	public  int countOfChildElements(CommonUIBean parentBean,CommonUIBean childBean) throws  Exception {
@@ -273,8 +276,8 @@ public class BaseMacacaClient extends MacacaClient {
 	}
 
 	/**
-	 * 自定义返回事件，对于iOS,通过右滑手势实现，对于Android，需要另外处理
-	 * @throws Exception
+	 * 自定义返回事件，对于iOS,通过右滑手势实现，对于Android，作用相当于点击系统返回键
+	 * @throws Exception 抛出异常
 	 */
 	public void customBack() throws Exception {
 		ResultGenerator.success("返回上一页","右滑返回");
@@ -292,7 +295,7 @@ public class BaseMacacaClient extends MacacaClient {
 	}
 
 	/**
-	 * 点击某一个控件，执行操作为 查找控件-点击控件
+	 * 点击某一个控件，执行操作为 查找控件&点击控件 使用此API时不用先查找控件是否存在，如果控件存在，会执行点击事件，如果不存在，点击没有效果
 	 * @param bean 要点击的控件
 	 */
 	public void onclickBean(CommonUIBean bean) {
@@ -314,7 +317,7 @@ public class BaseMacacaClient extends MacacaClient {
 	/**
 	 * 点击某一个控件，执行操作为 查找控件-点击控件
 	 * @param bean 目标控件
-	 * @param index 目标控件索引
+	 * @param index 目标控件索引，当要查询的控件存在多个时用于唯一标识其中一个控件
 	 */
 	public void onclickBeanAtIndex(CommonUIBean bean, int index) {
 		try {
@@ -333,8 +336,8 @@ public class BaseMacacaClient extends MacacaClient {
 	}
 	/**
 	 * 实现简单的输入
-	 * @param bean 要输入文本的控件
-	 * @param input 要输入的关键字
+	 * @param bean 要输入文本的控件(一般是输入框)
+	 * @param input 要输入的内容
 	 */
     public void inputBean(CommonUIBean bean,String input){
     	try {
@@ -369,7 +372,8 @@ public class BaseMacacaClient extends MacacaClient {
 
     /**
      * 获取控件文案
-     * @param bean 目标控件
+     * @param bean
+	 * 			目标控件
      * @return
      */
     public String getText(CommonUIBean bean) {
@@ -385,8 +389,10 @@ public class BaseMacacaClient extends MacacaClient {
 
     /**
      * 获取控件属性
-     * @param bean 目标控件
-     * @param name 要获取的属性名字
+     * @param bean
+	 * 			目标控件
+     * @param name
+	 * 			要获取的属性名字
      * Support: Android iOS Web(WebView). iOS: 'isVisible', 'isAccessible', 'isEnabled', 'type', 'label', 'name', 'value', Android: 'selected', 'description', 'text'
      * @return
      */
@@ -403,8 +409,13 @@ public class BaseMacacaClient extends MacacaClient {
 
     /**
      * 获取控件rect
-     * @param bean 目标控件
-     * @return jsonObject eg: {x:100,y:100,width：100,height:100}
+     * @param bean
+	 * 			目标控件
+	 * Support:
+	 * 			只支持Native控件，H5元素不支持
+     * @return
+	 * 			jsonObject eg: {x:100,y:100,width：100,height:100}
+	 *
      */
     public Object getRect(CommonUIBean bean) {
     	try {
@@ -514,6 +525,7 @@ public class BaseMacacaClient extends MacacaClient {
 
    	/**
    	 * 滑动到最底部
+	 * 只支持Native页面
    	 */
    	public void scrollToBottom () {
 
@@ -522,6 +534,7 @@ public class BaseMacacaClient extends MacacaClient {
 
 	/**
    	 * 滑动到最顶部
+	 * 只支持Native页面
    	 */
    	public void scrollToTop () {
 
@@ -678,9 +691,11 @@ public class BaseMacacaClient extends MacacaClient {
 
  	 // switch to the context of the last pushed webview
  	/**
- 	 * 从native切换到webview
+ 	 * 从native切换到webview，更新上下文为当前最顶部的context
+	 * 当webview内部发生到另一个webview的跳转后，也可以调用此API，此时可以将上下文更新为最顶部的webview
+	 * (webview如果存在多个时，会存在多个上下文，此时要对当前可见的webview操作，需要将上下文更新为当前顶部的webview,可以通过此API实现)
  	 * @return
- 	 * @throws Exception
+ 	 * @throws Exception 抛出异常
  	 */
     public  void switchFromNativeToWebView() throws Exception {
         JSONArray contexts = contexts();
@@ -689,9 +704,9 @@ public class BaseMacacaClient extends MacacaClient {
 
 
     /**
-     * 从webview切换到native
+     * 从webview切换到native，实际上是取最底部的上下文，一般为Native上下文
      * @return
-     * @throws Exception
+     * @throws Exception 抛出异常
      */
     public  void switchFromeWebviewToNative() throws Exception {
         JSONArray contexts = contexts();

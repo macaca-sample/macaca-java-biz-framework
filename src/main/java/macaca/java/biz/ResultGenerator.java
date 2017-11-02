@@ -32,7 +32,7 @@ public class ResultGenerator {
 	}
 
 	/**
-	 * 清除log数据,包含result.log & custom.log
+	 * 清除log数据,包含result.log custom.log
 	 */
 	public static void clearOldData() {
 		File resultFile = new File(NAME);
@@ -69,7 +69,7 @@ public class ResultGenerator {
 
 	/**
 	 * 页面加载失败时生成日志记录
-	 * @param page
+	 * @param page 当前页面对象
 	 */
 	public static void loadPageFail(BasePage page) {
 		fail(page.pageDesc,"页面加载失败",BaseErrorType.PAGE_NOT_LOAD);
@@ -77,7 +77,7 @@ public class ResultGenerator {
 
 	/**
 	 * 控件查找失败时生成日志记录
-	 * @param elementDesc 控件描述-方便可读性
+	 * @param targetElement 目标UI控件
 	 */
 	public static void findElementFail(CommonUIBean targetElement){
 		// 因为控件没查到不一定意味着这个case是失败的，但如果用fail就会导致整个case标记为失败，因此这里调用success方法
@@ -94,7 +94,7 @@ public class ResultGenerator {
 	//action|false|desc|type(code)  --->   action|false|type|desc
 	/**
 	 *
-	 * @param action
+	 * @param action 关键动作描述
 	 * @param desc	错误描述
 	 * @param type	错误类型, 必须选择一个错误类型
 	 */
@@ -105,8 +105,8 @@ public class ResultGenerator {
 
 	/**
 	 * 自定义日志输出
-	 * @param action
-	 * @param desc
+	 * @param action 动作信息
+	 * @param desc 自定义描述信息
 	 */
 	public static void customLog(String action,String desc){
 		write2File(CUSTOM_LOG, true, getStringDate() + "," + action+SEPARATOR+desc+LINE_SEPARATOR);
@@ -115,11 +115,11 @@ public class ResultGenerator {
 //		success("登录成功", "");
 	}
 
+
 	/**
-	   * 获取现在时间
-	   *
-	   * @return返回字符串格式 yyyy-MM-dd HH:mm:ss
-	   */
+	 *
+	 * @return 返回字符串格式 yyyy-MM-dd HH:mm:ss
+	 */
 	public static String getStringDate() {
 	   Date currentTime = new Date();
 	   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

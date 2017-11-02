@@ -19,8 +19,9 @@ public class BaseUtils {
 	 /**
      * 执行系统adb命令
      *
-     * @param cmd 要执行的adb命令
-     * @return
+     * @param cmd 要执行的命令
+	 * 比如要执行adb命令 ，可以使用BaseUtils.exec("adb shell pm clear yourapp");
+     * @return List
      */
     public static List<String> exec2(String cmd) {
     	ResultGenerator.customLog("执行系统命令", cmd);
@@ -104,7 +105,8 @@ public class BaseUtils {
  	  * @param deviceId 设备id,当存在多个设备时需指定设备id,如果只有一台设备，可以不必指定,ios:udid
  	  * @param packageName for Android，要启动app的packageName,与initDriver时设置的desiredCapabilities一致
  	  * @param activityName for Android，要启动app的activityName,与initDriver时设置的desiredCapabilities一致
- 	  * @param bundleId for ios，要启动app的bundleId 
+ 	  * @param bundleId for ios，要启动app的bundleId
+	 *  @throws    InterruptedException 中断异常
  	  */
  	 public static void launchApp(String deviceType,String deviceId,String packageName,String activityName,String bundleId ) throws InterruptedException {
  		 if(deviceType=="android"){
@@ -184,8 +186,8 @@ public class BaseUtils {
 
   	/**
  	 * 获取文件md5
- 	 * @param file
- 	 * @return
+ 	 * @param file 要处理的文件对象
+ 	 * @return 文件MD5后的结果
  	 */
  	 public static String getFileMD5(File file) {
  		 if (!file.isFile()) {
