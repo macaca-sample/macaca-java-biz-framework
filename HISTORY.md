@@ -1,3 +1,13 @@
+# 1.1.11 / 2017-11-02
+
+### BaseUtil.java 增加对软键盘的处理，包含软键盘是否展示以及输入
+	// BaseUtils.java
+	isSoftKeyboardDisplay()
+	通过adb命令获取输入软键盘的状态 1、mInputShown=true 则判断软键盘弹出 2、mInputShown=false 则判断软键盘隐藏 3、执行命令失败的情况下，默认返回false
+	
+	inputText(java.lang.String content)
+	通过adb命令模拟用户输入
+
 # 1.1.4 / 2017-07-14
 
 ### 增加一个个API
