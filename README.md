@@ -22,3 +22,6 @@ $ make doc
 ## Release notes
 
 - [HISTORY.md](./HISTORY.md)
+
+## 其他相关文档
+- [更多参考](https://testerhome.com/junhe)
