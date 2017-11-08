@@ -702,6 +702,14 @@ public class BaseMacacaClient extends MacacaClient {
         this.context(contexts.get(contexts.size() - 1).toString());
     }
 
+	/**
+	 * 当存在多个上下文时，切换当前上下文为当前最顶部的window，当webview发生跳转时可以通过此API更新上下文
+	 * @throws Exception
+	 */
+	public void updateTopContext() throws  Exception {
+		JSONArray contexts = contexts();
+		this.context(contexts.get(contexts.size() - 1).toString());
+	}
 
     /**
      * 从webview切换到native，实际上是取最底部的上下文，一般为Native上下文
