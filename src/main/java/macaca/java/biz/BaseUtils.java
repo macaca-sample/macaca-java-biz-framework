@@ -24,6 +24,14 @@ public class BaseUtils {
      * @return List
      */
     public static List<String> exec2(String cmd) {
+
+		// 将adb命令替换为系统安卓环境变量下的adb
+		if (cmd.startsWith("adb")){
+			String ANDROID_HOME = System.getenv("ANDROID_HOME");
+			String adbPath = ANDROID_HOME + "/platform-tools/adb";
+			cmd = cmd.replace("adb",adbPath);
+		}
+
     	ResultGenerator.customLog("执行系统命令", cmd);
         Runtime run = Runtime.getRuntime();//返回与当前 Java 应用程序相关的运行时对象
         List<String> lines = new ArrayList<String>();
