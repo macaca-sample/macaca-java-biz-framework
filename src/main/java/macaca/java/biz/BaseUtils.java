@@ -19,8 +19,9 @@ public class BaseUtils {
      *            比如要执行adb命令 ，可以使用BaseUtils.exec("adb shell pm clear yourapp");
      * @return List
      */
-    public static List<String> exec2(String cmd) throws Exception {
+    public static List<String> exec2(String cmd)  {
 
+        System.out.println("=========exec2===========");
         // 将adb命令替换为系统安卓环境变量下的adb
         if (cmd.startsWith("adb")) {
             String androidHomePath = System.getenv("ANDROID_HOME");
@@ -56,7 +57,7 @@ public class BaseUtils {
      * @param deviceId   设备id,当存在多个设备时需指定设备id,如果只有一台设备，可以不必指定,ios:udid
      * @param app        Android:apk的包名 iOS:app的bundleId
      */
-    public static void uninstallApp(String deviceType, String deviceId, String app) throws Exception {
+    public static void uninstallApp(String deviceType, String deviceId, String app)  {
         if (deviceType == "android") {
 
             if (isStringNotNull(deviceId)) {
@@ -86,7 +87,7 @@ public class BaseUtils {
      * @param deviceId    设备id,当存在多个设备时需指定设备id,如果只有一台设备，可以不必指定,ios:udid
      * @param packagePath 安装包路径 Android：.apk，ios：.ipa
      */
-    public static void deviceInstaller(String deviceType, String deviceId, String packagePath) throws  Exception {
+    public static void deviceInstaller(String deviceType, String deviceId, String packagePath)  {
         if (deviceType == "android") {
 
             installApp(deviceId, packagePath);
@@ -139,7 +140,7 @@ public class BaseUtils {
      * @param deviceId 设备id,当存在多个设备时需指定设备id,如果只有一台设备，可以不必指定
      * @param apkPath  安装包路径
      */
-    public static void installApp(String deviceId, String apkPath) throws  Exception {
+    public static void installApp(String deviceId, String apkPath)  {
         if (isStringNotNull(deviceId)) {
             exec2("adb -s " + deviceId + "install " + apkPath);
         } else {
@@ -155,7 +156,7 @@ public class BaseUtils {
      * @param packageName  要启动app的packageName,与initDriver时设置的desiredCapabilities一致
      * @param activityName 要启动app的activityName,与initDriver时设置的desiredCapabilities一致
      */
-    public static void startApp(String deviceId, String packageName, String activityName) throws  Exception {
+    public static void startApp(String deviceId, String packageName, String activityName)  {
         if (isStringNotNull(deviceId)) {
             exec2("adb -s " + deviceId + " shell am start -S -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -f 0x10200000 -n " + packageName + "/" + activityName);
         } else {
@@ -171,7 +172,7 @@ public class BaseUtils {
      * @param deviceId    设备id,当存在多个设备时需指定设备id,如果只有一台设备，可以不必指定
      * @param packageName 要启动app的packageName,与initDriver时设置的desiredCapabilities一致
      */
-    public static void clearApp(String deviceId, String packageName) throws  Exception {
+    public static void clearApp(String deviceId, String packageName)  {
 
         if (isStringNotNull(deviceId)) {
             exec2("adb -s " + deviceId + " shell pm clear " + packageName);
@@ -188,7 +189,7 @@ public class BaseUtils {
      * @param deviceId    设备id,当存在多个设备时需指定设备id,如果只有一台设备，可以不必指定
      * @param packageName 要启动app的packageName,与initDriver时设置的desiredCapabilities一致
      */
-    public static void forceStopApp(String deviceId, String packageName) throws  Exception {
+    public static void forceStopApp(String deviceId, String packageName)  {
 
         if (isStringNotNull(deviceId)) {
             exec2("adb -s " + deviceId + " shell am force-stop " + packageName);
@@ -204,7 +205,7 @@ public class BaseUtils {
      * @param file 要处理的文件对象
      * @return 文件MD5后的结果
      */
-    public static String getFileMD5(File file) throws  Exception {
+    public static String getFileMD5(File file) {
         if (!file.isFile()) {
             return null;
         }
@@ -228,7 +229,7 @@ public class BaseUtils {
     }
 
 
-    public static boolean isStringNotNull(String str) throws Exception {
+    public static boolean isStringNotNull(String str) {
         if (str == null || str.length() == 0) {
             return false;
         }
@@ -242,7 +243,7 @@ public class BaseUtils {
      * @param content 要输入的内容
      *                注意：建议输入英文，输入中文时由于系统问题会导致输入无效
      */
-    public static void inputText(String content) throws Exception {
+    public static void inputText(String content)  {
 
         if (isStringNotNull(content)) {
 
@@ -258,7 +259,7 @@ public class BaseUtils {
      *
      * @return boolean 软键盘显示：true，软键盘隐藏：false
      */
-    public static boolean isSoftKeyboardDisplay() throws Exception {
+    public static boolean isSoftKeyboardDisplay()  {
 
         List<String> result = BaseUtils.exec2("adb shell dumpsys input_method | grep mInputShown=");
         if (result == null || result.size() == 0) {
