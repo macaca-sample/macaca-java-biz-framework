@@ -21,7 +21,6 @@ public class BaseUtils {
      */
     public static List<String> exec2(String cmd)  {
 
-        System.out.println("=========exec2===========");
         // 将adb命令替换为系统安卓环境变量下的adb
         if (cmd.startsWith("adb")) {
             String androidHomePath = System.getenv("ANDROID_HOME");
