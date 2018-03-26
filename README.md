@@ -24,4 +24,16 @@ $ make doc
 - [HISTORY.md](./HISTORY.md)
 
 ## 其他相关文档
+
 - [更多参考](https://testerhome.com/junhe)
+<!-- GITCONTRIBUTOR_START -->
+
+## Contributors
+
+|[<img src="https://avatars1.githubusercontent.com/u/1011681?v=4" width="100px;"/><br/><sub><b>xudafeng</b></sub>](https://github.com/xudafeng)<br/>
+| :---: |
+
+
+This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto upated at `Mon Mar 26 2018 20:54:39 GMT+0800`.
+
+<!-- GITCONTRIBUTOR_END -->
