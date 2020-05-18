@@ -4,7 +4,7 @@
 
     <groupId>macaca.java</groupId>
     <artifactId>biz</artifactId>
-    <version>1.1.17</version>
+    <version>1.1.18</version>
     <packaging>jar</packaging>
 
     <name>biz</name>
@@ -14,8 +14,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -48,9 +48,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
