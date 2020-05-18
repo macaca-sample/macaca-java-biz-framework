@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
  */
 public class AppTest {
     @Test
-    public void appTest(){
+    public void appTest() {
         Assertions.assertTrue(true);
     }
 }

@@ -2,8 +2,8 @@ package macaca.java.biz;
 
 import macaca.client.commands.Element;
 import macaca.client.common.GetElementWay;
-
-import java.awt.*;
+import java.awt.Toolkit;
+import java.awt.Robot;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -31,7 +31,7 @@ public class WebCommonPage extends BasePage {
             int waitTime = 15;
             List<Element> findAction(GetElementWay getElementWay, String value) throws Exception {
                 List<Element> els = null;
-                while (waitTime> 0) {
+                while (waitTime > 0) {
                     switch (getElementWay) {
                         case ID:
                             els = driver.elementsById(value);
@@ -62,10 +62,10 @@ public class WebCommonPage extends BasePage {
                             break;
                     }
 
-                    if(els == null) {
+                    if (els == null) {
                         driver.sleep(1000);
                         waitTime--;
-                    }else {
+                    } else {
                         return els;
                     }
                 }
@@ -80,8 +80,7 @@ public class WebCommonPage extends BasePage {
         FindElements findElements = new FindElements();
 
         //      根据对应类型，调用对应的方法
-        return driver.curPlatform == BaseMacacaClient.PlatformType.ANDROID ?
-                findElements.findAction(bean.getAndroidBy(), bean.getAndroidValue())
+        return driver.curPlatform == BaseMacacaClient.PlatformType.ANDROID ? findElements.findAction(bean.getAndroidBy(), bean.getAndroidValue())
                 :
                 findElements.findAction(bean.getIosBy(), bean.getIosValue());
     }
@@ -116,7 +115,7 @@ public class WebCommonPage extends BasePage {
     public void radioSelect(CommonUIBean radioByListBean) throws Exception {
         //随机选择一个正确答案
         int i = getElements(radioByListBean).size() - 1;
-        if ( i <= 0 ) {
+        if (i <= 0) {
             //集合中包含单一元素处理
             driver.onclickBeanAtIndex(radioByListBean, randomInt(i + 1));
         }

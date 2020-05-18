@@ -8,7 +8,7 @@ import java.util.List;
  * @description: App Common function
  * @create: 2020-05-18 16:40
  **/
-public class AppCommonPage extends BasePage{
+public class AppCommonPage extends BasePage {
     private double appWidth;
     private double appHeight;
 
@@ -52,12 +52,12 @@ public class AppCommonPage extends BasePage{
 //        Physical size: 1080x1920
         String adb = "adb shell wm size";
         List<String> logs = BaseUtils.exec2(adb);
-        String falg = "Physical size: ";
-        for(String log : logs){
-            int index = log.indexOf(falg);
-            if(index >= 0){
-                String hvga = log.substring(falg.length());
-                String hvgas[] = hvga.split("x");
+        String flag = "Physical size: ";
+        for (String log : logs) {
+            int index = log.indexOf(flag);
+            if (index >= 0) {
+                String hvga = log.substring(flag.length());
+                String[] hvgas = hvga.split("x");
                 this.setAppWidth(Double.parseDouble(hvgas[0]));
                 this.setAppHeight(Double.parseDouble(hvgas[1]));
             }
@@ -72,14 +72,14 @@ public class AppCommonPage extends BasePage{
      * @param fromRatioY
      * @throws Exception
      */
-    public void dragByRatio(double starRatioX, double starRatioY, double fromRatioX, double fromRatioY ) throws Exception {
+    public void dragByRatio(double starRatioX, double starRatioY, double fromRatioX, double fromRatioY) throws Exception {
         if (driver.curPlatform == BaseMacacaClient.PlatformType.ANDROID) {
             double x =  this.getAppWidth() * starRatioX;
             double y =  this.getAppHeight() * starRatioY;
             double fX =  this.getAppWidth() * fromRatioX;
             double fY =  this.getAppHeight() * fromRatioY;
             // adb 拖动 命令
-            String cmdString = "adb shell input swipe"+ " " + x + " "+ y + " " + fX + " "+ fY;
+            String cmdString = "adb shell input swipe" + " " + x + " " + y + " " + fX + " " + fY;
             BaseUtils.exec2(cmdString);
             driver.sleep(500);
         }
