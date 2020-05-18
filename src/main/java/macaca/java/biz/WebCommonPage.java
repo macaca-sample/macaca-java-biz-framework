@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * @author shixing & niaoshuiai
  * @program: biz
  * @description: web common function
  * @create: 2020-05-18 16:41
