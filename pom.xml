@@ -60,6 +60,21 @@
         </dependency>
     </dependencies>
 
+
+    <repositories>
+        <repository>
+            <id>spring lib</id>
+            <name>spring lib</name>
+            <url>https://repo.spring.io/libs-release/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <distributionManagement>
         <repository>
             <id>bintray-orgz-macaca-java-biz</id>
